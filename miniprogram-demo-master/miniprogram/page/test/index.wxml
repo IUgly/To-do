@@ -1,0 +1,62 @@
+<view class='add' style='display:{{addIsShow}}' bindtap='onClick'><text>+</text></view>
+
+<view class="index">
+  <view class="index-hd">
+    <image class="index-logo" src="../../page/component/resources/kind/logo.png"></image>
+    <view class="index-desc">以下将展示 
+      <navigator url="pages/doc-web-view/doc-web-view"    class="weui-agree__link">小程序开发文档
+      </navigator>
+    </view>
+  </view>
+<!-- <view style='width:100%;height:100%;text-align:center;' class="picture-2">  -->
+  <!-- <image class='bannerimg' mode='widthFix' src="../../image/banner.png"
+    catchtap='navmap'style='width:100%;'>
+  </image> -->
+  <!-- <image class="index-logo" src="../../page/component/resources/kind/logo.png">
+  </image>
+<view class="index-desc">以下将展示 
+      <navigator url="pages/doc-web-view/doc-web-view"    class="weui-agree__link">小程序开发文档
+      </navigator>。
+    </view> -->
+<!-- </view> -->
+
+<view class="header" style="position:fixed; bottom:0;width: 750rpx;display:{{inputIsShow}}">
+    <image class="plus" src="../../image/plus.png"/>
+    <input focus='{{input_bool}}' class="new-todo" value="{{input}}" placeholder="Anything here..." auto-focus bindinput="inputChangeHandle" bindconfirm="addTodoHandle" bindblur='onDefault'/>
+  </view>
+
+  <block wx:if="{{todos.length}}">
+
+    <view class="todos">
+      <!-- List items should get the class `completed` when marked as completed -->
+      <view class="item{{ item.completed ? ' completed' : '' }}" wx:for="{{ todos }}" wx:key="{{ index }}" bindtap="toggleTodoHandle" data-index="{{ index }}">
+        <!-- completed: success, todo: circle -->
+        <icon class="checkbox" type="{{item.completed ? 'success' : 'circle'}}"/>
+        <view class='box'>
+        <text class="name">{{ item.name }}</text>
+        
+        <view class='tags' >
+        <text class='task'>任务 . </text>
+        <text class='time'>5 6节</text></view>
+        <!-- <van-tag class="demo-margin-right" type="primary">{{room}}</van-tag>
+        <van-tag class="demo-margin-right" type="primary">{{teacher}}</van-tag>
+        <van-tag type="success">{{type}}</van-tag> -->
+
+        </view>
+        
+        <icon class="remove" type="clear" size="16" catchtap="removeTodoHandle" data-index="{{ index }}"/>
+      </view>
+    </view>
+    <view class="footer">
+      <text class="btn" bindtap="toggleAllHandle">Toggle all</text>
+      <text wx:if="{{ leftCount }}">{{ leftCount }} {{ leftCount === 1 ? 'item' : 'items' }} left</text>
+      <text class="btn" wx:if="{{ todos.length > leftCount }}" bindtap="clearCompletedHandle">Clear completed</text>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="empty">
+      <text class="title">Congratulations!</text>
+      <text class="content">There's no more work left.</text>
+    </view>
+  </block>
+</view>
