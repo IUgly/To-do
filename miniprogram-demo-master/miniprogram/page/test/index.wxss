@@ -102,6 +102,8 @@ page{
   flex: 1;
   font-size: 32rpx;
   color: #222;
+  width: 80%;
+  word-break: break-all;
 }
 
 .todos .item.completed .name {

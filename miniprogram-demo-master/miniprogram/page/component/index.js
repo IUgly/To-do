@@ -1,73 +1,77 @@
-Page({
-  onShow() {
-    wx.reportAnalytics('enter_home_programmatically', {})
-  },
-  onShareAppMessage() {
-    return {
-      title: '小程序官方组件展示',
-      path: 'page/component/index'
+// components/slide-item/slide-item.js
+Component({
+  /**
+   * 组件的属性列表
+   */
+  properties: {
+    isNeedAddClassifyButton: {
+      type: Boolean,
+      value: false
     }
   },
 
+  /**
+   * 组件的初始数据
+   */
   data: {
-    list: [
-      {
-        id: 'view',
-        name: '视图容器',
-        open: false,
-        pages: ['view', 'scroll-view', 'swiper', 'movable-view', 'cover-view']
-      }, {
-        id: 'content',
-        name: '基础内容',
-        open: false,
-        pages: ['text', 'icon', 'progress', 'rich-text']
-      }, {
-        id: 'form',
-        name: '表单组件',
-        open: false,
-        pages: ['button', 'checkbox', 'form', 'input', 'label', 'picker', 'picker-view', 'radio', 'slider', 'switch', 'textarea']
-      }, {
-        id: 'nav',
-        name: '导航',
-        open: false,
-        pages: ['navigator']
-      }, {
-        id: 'media',
-        name: '媒体组件',
-        open: false,
-        pages: ['image', 'audio', 'video', 'camera']
-      }, {
-        id: 'map',
-        name: '地图',
-        open: false,
-        pages: ['map']
-      }, {
-        id: 'canvas',
-        name: '画布',
-        open: false,
-        pages: ['canvas']
-      }, {
-        id: 'open',
-        name: '开放能力',
-        open: false,
-        pages: ['ad', 'open-data', 'web-view']
-      }
-    ]
+    touchStartPageX: 0,
+    scrollLeft: 0,
   },
 
-  kindToggle(e) {
-    const id = e.currentTarget.id
-    const list = this.data.list
-    for (let i = 0, len = list.length; i < len; ++i) {
-      if (list[i].id === id) {
-        list[i].open = !list[i].open
-      } else {
-        list[i].open = false
+  /**
+   * 组件的方法列表
+   */
+  methods: {
+    /**
+     * 手指触摸开始
+     */
+    _touchStart: function (e) {
+      this.setData({
+        touchStartPageX: e.changedTouches[0].pageX,
+      })
+    },
+    /**
+     * 手指触摸结束
+     */
+    _touchEnd: function (e) {
+      let touchEndPageX = e.changedTouches[0].pageX,
+        offSetStartToEnd = touchEndPageX - this.data.touchStartPageX;
+      if (offSetStartToEnd < 10 & offSetStartToEnd > -10) {
+        return;
+      };
+      if (offSetStartToEnd > 10) {
+        if (this.data.scrollLeft === 0) return;
+        this.setData({
+          scrollLeft: 0,
+        });
+      };
+      if (offSetStartToEnd < -10) {
+        this.setData({
+          scrollLeft: this.data.isNeedAddClassifyButton ? 120 : 60,
+        })
       }
-    }
-    this.setData({
-      list
-    })
-    wx.reportAnalytics('click_view_programmatically', {})
+    },
+    /**
+     * 点击删除按钮
+     */
+    _deleteTouchEnd: function (e) {
+      let touchEndPageX = e.changedTouches[0].pageX,
+        offSetStartToEnd = touchEndPageX - this.data.touchStartPageX;
+      if (offSetStartToEnd < 10 & offSetStartToEnd > -10) {
+        this.triggerEvent('delete', {});
+      };
+      return;
+    },
+    /**
+     * 点击设置按钮
+     */
+    _setTouchEnd: function (e) {
+      let touchEndPageX = e.changedTouches[0].pageX,
+        offSetStartToEnd = touchEndPageX - this.data.touchStartPageX;
+      if (offSetStartToEnd < 10 & offSetStartToEnd > -10) {
+        this.triggerEvent('set', {});
+      };
+      return;
+    },
   }
 })

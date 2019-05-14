@@ -41,9 +41,7 @@
         <!-- <van-tag class="demo-margin-right" type="primary">{{room}}</van-tag>
         <van-tag class="demo-margin-right" type="primary">{{teacher}}</van-tag>
         <van-tag type="success">{{type}}</van-tag> -->
-
         </view>
-        
         <icon class="remove" type="clear" size="16" catchtap="removeTodoHandle" data-index="{{ index }}"/>
       </view>
     </view>
